@@ -27,6 +27,8 @@ class Project(models.Model):
 
     def get_funded_amount(self):
         amount =self.get_active_contributions().aggregate(total=models.Sum('amount'))
+        if amount is None:
+            amount = 0
         return amount.get('total',0)
 
     def get_funded_percentage(self):
@@ -38,6 +40,9 @@ class Project(models.Model):
     # Urls
     def get_detail_url(self,**kwargs):
         return reverse ('project:detail_view', kwargs={'id' :self.id})
+
+    def get_edit_url(self,**kwargs):
+        return reverse ('project:edit_view', kwargs={'id' :self.id})
 
 class ProjectContribution(models.Model):
     project = models.ForeignKey(Project,on_delete=models.CASCADE)

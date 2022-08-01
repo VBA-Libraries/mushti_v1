@@ -1,0 +1,33 @@
+{% extends '../base.html' %}
+
+
+{% block container %}
+
+<div class="col-8">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card border-success mx-auto ">
+            <div class="card-header bg-success text-white border-success">
+                <h1>Edit Project:</h1>
+            </div>
+            <div class="card-body bg-light text-primary ">
+                {{form.as_p}}
+            </div>
+        </div>
+        <div class="card border-success mx-auto ">
+            <div class="card-header bg-info text-white border-success">
+                <h1>Contribution List:</h1>
+            </div>
+            <div class="card-body bg-light text-primary ">
+                {% for form2 in form_set %}
+                    {{form2.as_p}}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="card-footer" style="text-align: right;">
+            <input class="btn btn-primary" value="Save" type="submit">
+        </div>
+
+    </form>
+</div>
+{% endblock %}
