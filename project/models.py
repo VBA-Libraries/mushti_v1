@@ -27,17 +27,23 @@ class Project(models.Model):
 
     def get_funded_amount(self):
         amount =self.get_active_contributions().aggregate(total=models.Sum('amount'))
-        return amount.get('total',0)
+        funded_amount =amount.get('total',0)
+        if funded_amount==None:
+            funded_amount=0
+        return round(funded_amount,2)
 
     def get_funded_percentage(self):
         amount = self.get_funded_amount()
-        
-        if amount == None:
-            amount = 0
         return round( amount/self.budget * 100,0)
     # Urls
     def get_detail_url(self,**kwargs):
         return reverse ('project:detail_view', kwargs={'id' :self.id})
+    def get_update_url(self,**kwargs):
+        return reverse ('project:update_view', kwargs={'id' :self.id})
+    def get_deactivate_url(self,**kwargs):
+        return reverse ('project:deactivate_view')
+    def get_contrib_url(self):
+        return reverse('project:contrib_create_view')
 
 class ProjectContribution(models.Model):
     project = models.ForeignKey(Project,on_delete=models.CASCADE)

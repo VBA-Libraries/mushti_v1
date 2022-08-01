@@ -4,31 +4,98 @@
 {% block container %}
 
 
-
-
 <div class="card border-success col-6 mx-auto ">
     <div class="card-header bg-success text-white border-success">
-        {{ object.name}}
+        <h3>{{ object.name}}</h3>
     </div>
     <div class="card-body bg-light text-primary ">
-        <p>
+        <h4 class="card-title">
             {{object.description}}
-        </p>
+
+        </h4>
+        <hr>
         <p>
             Pledged: ${{object.budget}},
         </p>
-        Funded: ${{object.get_funded_amount}}
         <p>
-            Funded%: {{object.get_funded_percentage}}%
+            Funded: ${{object.get_funded_amount}}
         </p>
 
+        <p>
+            Achieved: {{object.get_funded_percentage}}%
+        </p>
+        <div>
+            {% if request.user == object.user %}
+
+
+            <a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                Delete
+            </button>
+
+
+            {% endif %}
+        </div>
     </div>
-    <div class="card-footer" style="text-align: right;">
-        <a class="btn btn-success" href="#">Edit</a>
-        <a class="btn btn-success" href="#">Contribute</a>
+    <div class="card-footer text-primary ">
+
+        {% if contrib_list.count %}
+        <h4>Contributions</h3>
+            <ul style="text-align: left;">
+                {% for contrib in contrib_list %}
+                <li>{{contrib.created_date}} - {{contrib.amount}} by {{contrib.contributor}} </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <div style="text-align: right;">
+                <form method="POST" action="{{object.get_contrib_url}}">
+                    {% csrf_token %}
+                    <input type="hidden" name="project_id" value={{object.id}} />
+
+
+
+
+                    <div class="input-group  ">
+                        <input type="text" name="amount" class="form-control" placeholder="Search project"
+                            aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-primary" type="submit" id="button-addon2">Contribute</button>
+                    </div>
+
+                </form>
+            </div>
     </div>
 </div>
 
+
+<!-- Button trigger modal -->
+
+<form method="POST" action="{{object.get_deactivate_url}}">
+    {% csrf_token %}
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete project?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Delete project {{object.name|lower}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-danger" value="Delete" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="project_id" value={{object.id}} />
+
+</form>
 
 
 
