@@ -1,0 +1,17 @@
+{% extends '../base.html' %}
+
+
+{% block container %}
+<h1>Project List:</h1>
+<ul>
+    {% for object in object_list %}
+    <li>
+        <h3 class="card-header"><a href="{{object.get_detail_url }}">{{object.name}} </a></h3>
+        <p>
+            Pledged: ${{object.budget}}, Funded: {{object.get_funded_percentage}}%
+        </p>
+    </li>
+
+    {% endfor %}
+</ul>
+{% endblock %}
