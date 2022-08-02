@@ -37,14 +37,14 @@ def logout_view(request):
     logout(request)
     return redirect('project:list_view')
 
-    
-@login_required
+
 def profile_create_view(request):
     form = ProfileCreateForm(request.POST or None)
     user = request.user
-    qs = Profile.objects.get(user_id = user.id)
-    print(qs.first_name)
-    if qs.id:
+    qs = Profile.objects.filter(user_id = user.id)
+    # qs = Profile.objects.get(user_id = user.id)
+    # print(qs.first_name)
+    if qs:
         print('redirecting')
         return redirect ('account:detail_view')
         # return render(request,'account/detail.html',{'object':qs})
@@ -75,7 +75,8 @@ def user_create_view(request):
         print (form.cleaned_data['password'])
         user.set_password(form.cleaned_data['password'])
         form.save()
-        redirect("account:create_view")
+        login(request=request,user= user)
+        return redirect("account:create_view")
 
     
     context ={
