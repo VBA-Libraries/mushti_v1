@@ -11,18 +11,23 @@ from .forms import *
 def login_view(request):
     form = LoginForm(request.POST or None)
     if form.is_valid():
-
         password = form.cleaned_data.get('password')
         username = form.cleaned_data.get('username')
         user = authenticate(
             username=username,
             password=password
         )
-        if user.id :
-            login(request=request,user= User)
+        if user :
+            login(request=request,user= user)
+            url = request.GET.get('next')
+            if url:
+                return redirect(url)
+            else:
+                return redirect('project:list_view')
         else:
             form.add_error(field=None, error= AuthenticationError("Incorrect username or password"))
-    
+
+
     context ={
         'form':form
     }
