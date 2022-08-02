@@ -78,6 +78,7 @@ def user_create_view(request):
         login(request=request,user= user)
         return redirect("account:create_view")
 
+
     
     context ={
         'form':form
