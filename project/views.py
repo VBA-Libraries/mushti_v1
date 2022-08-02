@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.urls import reverse
 from .models import Project, ProjectContribution
 from .forms import ProjectCreateForm, ProjectContributionCreateForm
@@ -48,6 +48,8 @@ def project_edit_view(request,id,*args, **kwargs):
                 contrib = form2.instance
                 contrib.project = project
                 form2.save()
+                # return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         return redirect ('project:list_view')
     return render(request,'project/edit.html',context)
 
