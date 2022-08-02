@@ -19,9 +19,7 @@
                 <h1>Contribution List:</h1>
             </div>
             <div class="card-body bg-light text-primary ">
-                {% for form2 in form_set %}
-                    {{form2.as_p}}
-                {% endfor %}
+                {{ form_set.as_p }}
             </div>
         </div>
         <div class="card-footer" style="text-align: right;">

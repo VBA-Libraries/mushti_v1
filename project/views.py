@@ -25,7 +25,7 @@ def project_edit_view(request,id,*args, **kwargs):
     form = ProjectCreateForm(request.POST or None, instance=project)
     rs = project.get_active_contributions()
     # print(rs)
-    form2 = ProjectContributionCreateForm(request.POST or None)
+    # form2 = ProjectContributionCreateForm(request.POST or None)
     proj_contrib_formset = modelformset_factory(model=ProjectContribution,form=ProjectContributionCreateForm,extra=0)
     form_set = proj_contrib_formset(request.POST or None,queryset=rs)
 
@@ -35,20 +35,19 @@ def project_edit_view(request,id,*args, **kwargs):
         'form_set': form_set
 
     }
-    print('coming outside valid')
-    print(form_set.is_valid())
+
     if all([form.is_valid(), form_set.is_valid()]):
     # if form.is_valid():
-        print("Coming Here!")
         project =form.instance
         project.user = request.user
         form.save()
         for form in form_set:
             # child = form.save(commit=False)
             # child.project = project
-            contrib = form2.instance
-            contrib.project = project
-            form2.save()
+            for form2 in form_set:
+                contrib = form2.instance
+                contrib.project = project
+                form2.save()
         return redirect ('project:list_view')
     return render(request,'project/edit.html',context)
 
