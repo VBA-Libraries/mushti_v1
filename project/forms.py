@@ -6,7 +6,7 @@ class ProjectContributionCreateForm(forms.ModelForm):
     
     class Meta:
         model = ProjectContribution
-        fields =['amount']
+        fields =['amount','comments']
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
