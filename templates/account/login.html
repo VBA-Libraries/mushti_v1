@@ -12,21 +12,17 @@
 
             <div class="card-body">
 
-
-
                 {% csrf_token %}
                 {{form.as_p}}
-
-
-
-
 
             </div>
             <div class="card-footer  " style="text-align:right;">
 
                 <input class="btn btn-primary " value="Login" type="submit">
                 <a class="btn btn-primary" href="{% url 'account:signup_view' %}">Signup</a>
-
+                <div>
+                    <a  href="{% url 'password_request' %}">Forget Password? </a>
+                </div>
             </div>
         </div>
     </form>

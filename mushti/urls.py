@@ -15,9 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from account.views import password_reset_request
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',include('account.urls')),
-    path('',include('project.urls'))
+    path('',include('project.urls')),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name="password_reset/reset_done.html"),
+        name="password_reset_done"),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="password_reset/change_password.html"),
+        name="password_reset_confirm"),
+    path('reset/done', auth_views.PasswordResetCompleteView.as_view(template_name="password_reset/reset_complete.html"),
+        name="password_reset_complete"),
+    path('password/reset/', password_reset_request, name='password_request')
+
 ]
