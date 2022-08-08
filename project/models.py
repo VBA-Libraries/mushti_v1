@@ -44,6 +44,7 @@ class Project(models.Model):
         return reverse ('project:deactivate_view')
     def get_contrib_url(self):
         return reverse('project:contrib_create_view')
+    
 
 class ProjectContribution(models.Model):
     project = models.ForeignKey(Project,on_delete=models.CASCADE)

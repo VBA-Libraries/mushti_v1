@@ -132,7 +132,7 @@ def password_reset_request(request):
                                   [user.email], fail_silently=False)
                     except:
                         return HttpResponse('Invalid header found.')
-                    return redirect("/password_reset/done/")
+                    return redirect("../../password_reset/done/")
     password_reset_form = PasswordResetForm()
     context = {
         'form': password_reset_form

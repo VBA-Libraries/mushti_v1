@@ -2,9 +2,9 @@ from django.http import Http404
 
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
-from .models import Project
+from .models import *
 from django.db.models import Q
-from .forms import ProjectCreateForm, ProjectContributionCreateForm
+from .forms import *
 # Create your views here.
 
 def project_list_view(request,*args, **kwargs):
