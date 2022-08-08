@@ -46,13 +46,18 @@ def project_create_update_view(request,*args, **kwargs):
     if not project_id is None:
         project = Project.objects.get(id=project_id)
         msg = "Update Project"
-
-    form = ProjectCreateForm(request.POST or None,instance=project)
+        form = ProjectCreateForm(request.POST or None, instance=project,)
+    else:
+        form = ProjectCreateForm(request.POST or None)
+    # form = ProjectCreateForm(request.POST or None, request.FILES)
     if request.POST:
+        form = ProjectCreateForm(request.POST or None, request.FILES)
         if form.is_valid():
+            
             project =form.instance
             project.user = request.user
             form.save()
+            
             return redirect (form.instance.get_detail_url())             
     context = {
             'form':form,

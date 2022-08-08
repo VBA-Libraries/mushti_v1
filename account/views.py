@@ -54,7 +54,7 @@ def profile_create_view(request):
     # print(qs.first_name)
     if qs:
         print('redirecting')
-        return redirect ('account:detail_view')
+        return redirect ('detail_view')
         # return render(request,'account/detail.html',{'object':qs})
 
     if form.is_valid():
@@ -63,7 +63,7 @@ def profile_create_view(request):
         profile.user =request.user
         # profile.save()
         form.save()
-        redirect('account:detail_view')
+        redirect('detail_view')
 
     context ={
         'form':form
@@ -84,7 +84,7 @@ def user_create_view(request):
         user.set_password(form.cleaned_data['password'])
         form.save()
         login(request=request,user= user)
-        return redirect("account:create_view")
+        return redirect("create_view")
 
 
     

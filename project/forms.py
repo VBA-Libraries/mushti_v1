@@ -23,11 +23,9 @@ class ProjectContributionCreateForm(forms.ModelForm):
 
 class ProjectCreateForm(forms.ModelForm):
     
-       
-    
     class Meta:
         model = Project
-        fields = ['name','description','budget']
+        fields = ['name','description','budget', 'category', 'project_image']
         widgets={
             'description':forms.Textarea(
                 attrs={'rows':2,

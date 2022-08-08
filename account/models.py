@@ -16,7 +16,7 @@ class Profile(models.Model):
     is_active = models.BooleanField(default=True)
 
     def get_detail_url(self):
-        return reverse('account:profile_detail', kwargs= {'id': self.id})
+        return reverse('profile_detail', kwargs= {'id': self.id})
 
 
 

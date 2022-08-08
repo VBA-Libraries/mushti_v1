@@ -1,4 +1,6 @@
 
+from email.policy import default
+from unicodedata import category
 from django.db import models
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
@@ -11,9 +13,24 @@ class ProjectManager(models.Manager):
     
 
 class Project(models.Model):
+    cat_choices = (
+        ('Art','Art'),
+        ( 'Culture' ,'Culture'),
+        ('Creativity','Creativity'),
+        ('Education','Education'),
+        ('Film','Film'),
+        ('Food & Crafts', 'Food & Crafts'),
+        ('Game', 'Game'),
+        ('Music','Music'),
+        ('Publishing','Publishing'),
+        ('Others','Others')
+
+    )
     name = models.CharField(max_length=100)
     description = models.TextField()
     budget = models.DecimalField(max_digits=10, decimal_places=2)
+    project_image = models.ImageField(upload_to = 'images/')
+    category = models.CharField(max_length=50, choices=cat_choices,default='Others')
     user = models.ForeignKey(User,on_delete=models.SET_NULL, null=True, blank = True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
