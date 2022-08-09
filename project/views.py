@@ -15,6 +15,7 @@ def project_list_view(request,*args, **kwargs):
         qs = qs.filter(search_param)
     context ={
         'object_list': qs
+        
     }
     return render(request,'project/list.html',context)
 
