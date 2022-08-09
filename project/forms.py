@@ -16,8 +16,7 @@ class ProjectContributionCreateForm(forms.ModelForm):
                 {
             'placeholder': f'{str(field)}',
             'class': 'form-control'
-            }
-                
+            }  
         )
           
 

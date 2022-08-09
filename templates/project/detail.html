@@ -45,18 +45,20 @@
 
     <div class="card-footer text-primary ">
         {% if contrib_list.count %}
-        <h4>Contributions</h3>
-            <ul style="text-align: left;">
-                <div id = "contributions_list">
-                    {% for contrib in contrib_list %}
-                        <li>{{contrib.created_date}} - {{contrib.amount}} by {{contrib.contributor}} - {{contrib.comments}}
-                        </li>
-                    {% endfor %}
-                </div>
-            </ul>
+        <h4>Contributions</h4>
+            <div id = "contributions_list21">
+                <ul style="text-align: left;">
+                
+                        {% for contrib in contrib_list %}
+                            <li>{{contrib.created_date}} - {{contrib.amount}} by {{contrib.contributor}} - {{contrib.comments}}
+                            </li>
+                        {% endfor %}
+                
+                </ul>
+             </div>
             {% endif %}
             <div style="text-align: right;">
-                <form method="POST" action="{{object.get_contrib_url}}">
+                <form method="POST" hx-post="{{object.get_contrib_url}}">
                 
                     {% csrf_token %}
                     <input type="hidden" name="project_id" value={{object.id}} />
@@ -66,8 +68,8 @@
                             aria-label="Recipient's username" aria-describedby="button-addon2">
 
                         <input type="text" name="comments" class="form-control" placeholder="comments" />
-                        <button class="btn btn-outline-primary" hx-get = "." hx-target = "#contributions_list" hx-swap="outerHTML" 
-                        hx-trigger = "click" type="submit" id="button-addon2">Contribute</button>
+                        <button class="btn btn-outline-primary"  hx-target = "#contributions_list21" hx-swap="innerHTML" 
+                        hx-trigger = "/click" type="submit" id="button-addon2">Contribute</button>
                     </div>
 
                 </form>
