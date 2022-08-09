@@ -42,31 +42,32 @@
             {% endif %}
         </div>
     </div>
-    <div class="card-footer text-primary ">
 
+    <div class="card-footer text-primary ">
         {% if contrib_list.count %}
         <h4>Contributions</h3>
             <ul style="text-align: left;">
-                {% for contrib in contrib_list %}
-                <li>{{contrib.created_date}} - {{contrib.amount}} by {{contrib.contributor}} - {{contrib.comments}}
-                </li>
-                {% endfor %}
+                <div id = "contributions_list">
+                    {% for contrib in contrib_list %}
+                        <li>{{contrib.created_date}} - {{contrib.amount}} by {{contrib.contributor}} - {{contrib.comments}}
+                        </li>
+                    {% endfor %}
+                </div>
             </ul>
             {% endif %}
             <div style="text-align: right;">
                 <form method="POST" action="{{object.get_contrib_url}}">
+                
                     {% csrf_token %}
                     <input type="hidden" name="project_id" value={{object.id}} />
-
-
-
 
                     <div class="input-group  ">
                         <input type="text" name="amount" class="form-control mx-2" placeholder="amount"
                             aria-label="Recipient's username" aria-describedby="button-addon2">
 
                         <input type="text" name="comments" class="form-control" placeholder="comments" />
-                        <button class="btn btn-outline-primary" type="submit" id="button-addon2">Contribute</button>
+                        <button class="btn btn-outline-primary" hx-get = "." hx-target = "#contributions_list" hx-swap="outerHTML" 
+                        hx-trigger = "click" type="submit" id="button-addon2">Contribute</button>
                     </div>
 
                 </form>

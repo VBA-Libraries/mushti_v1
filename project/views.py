@@ -17,6 +17,8 @@ def project_list_view(request,*args, **kwargs):
         'object_list': qs
         
     }
+    if request.htmx:
+        return render(request,'project/pertial/list.html',context)    
     return render(request,'project/list.html',context)
 
 def project_deactivate_view(request):
@@ -35,6 +37,8 @@ def project_detail_view(request,id,*args, **kwargs):
         'object':project,
         'contrib_list':contrib_list
     }
+    if request.htmx:
+        return render(request,'project/pertial/detail.html',context)
     
     return render(request,'project/detail.html',context)
 
@@ -72,8 +76,10 @@ def project_create_update_view(request,*args, **kwargs):
 
 
 def project_contribution_create_view(request,*args, **kwargs):
+    print("coming here in create contribution")
     if request.POST:
         form = ProjectContributionCreateForm(request.POST or None)
+
         if form.is_valid():
             project_id = request.POST.get('project_id')
 
@@ -83,9 +89,12 @@ def project_contribution_create_view(request,*args, **kwargs):
             
             form.save()
             return redirect ('project:detail_view',project_contrib.project.id )
+            
         else:
             return redirect ('project:detail_view', request.POST.get('project_id') )
-
+    
+        
+    
     else:
         raise Http404
 

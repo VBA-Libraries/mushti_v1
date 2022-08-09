@@ -1,0 +1,4 @@
+{% for contrib in contrib_list %}
+    <li>{{contrib.created_date}} - {{contrib.amount}} by {{contrib.contributor}} - {{contrib.comments}}
+    </li>
+{% endfor %}
